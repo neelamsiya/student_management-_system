@@ -1,0 +1,62 @@
+{% extends 'app1/base.html' %}
+{% block content %}
+{%  load static %}
+
+<div>
+<h1 class="text-center alert alert-success"> Student management system 
+<img src="{% static 'app1/images/download.jpg' %}"  class="img-fluid rounded-circle mt-1" width="100px" heght="100px"></h1>
+
+
+<div class="row">
+    <div class="col-sm-4 mx-4">
+        <h4 class="text-center alert alert-info"> Student Registration form</h4>
+        <div style="background-color: aliceblue;" >
+        <form action="" method="POST" >
+            {% csrf_token %}
+            {{form.as_p}}
+
+            <input type="submit"  >
+        </form>
+    </div>
+    </div>
+
+    <div class="col-sm-7 mx-4">
+    <h4 class="text-center alert alert-info"> Student details</h4>
+    <table class="table table-dark table-striped">
+        <tr>
+            <th> ID</th>
+            <th> First Name</th>
+            <th> Last Name</th>
+            <th> Email</th>
+            <th> Update/delete</th>
+        </tr>
+        {% for st in stud %}
+        <tr>
+           <td>{{st.id}}</td>
+           <td>{{st.first_name}}</td>
+           <td>{{st.last_name}}</td>
+           <td>{{st.email}}</td>
+           <td>
+            <a href="{% url  'update' st.id %}" class="btn btn-info"> Update</a>
+            <form action="{% url  'delete' st.id %}" method="POST" class="d-inline">
+                {% csrf_token %}
+                <input type="submit" value="delete" class="btn btn-danger">
+            </form>
+            
+           </td>
+        </tr>
+
+        {% endfor %}
+
+
+
+    </table>
+    </div>
+        
+
+
+
+</div>
+</div>
+
+{% endblock content %}
